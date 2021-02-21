@@ -68,8 +68,14 @@ class _HomeScreenState extends State<HomeScreen>
         drawer: CategoriesDrawer(),
         backgroundColor: Colors.black87,
         body: _articles.isNotEmpty
-            ? ListView(
-                children: _articles.map((e) => ArticleTile(e)).toList(),
+            ? RefreshIndicator(
+                onRefresh: () async {
+                  _fetchLatestNews();
+                },
+                color: Colors.black,
+                child: ListView(
+                  children: _articles.map((e) => ArticleTile(e)).toList(),
+                ),
               )
             : Center(
                 child: CircularProgressIndicator(

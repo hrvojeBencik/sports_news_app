@@ -17,10 +17,10 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
   @override
   void initState() {
     super.initState();
-    _getFootballNews();
+    _getSelectedSportsNews();
   }
 
-  void _getFootballNews() async {
+  void _getSelectedSportsNews() async {
     ApiService apiService = ApiService();
     String category = "Sports";
     if (widget.selectedSport == "Football") {
@@ -54,8 +54,14 @@ class _SelectedNewsScreenState extends State<SelectedNewsScreen> {
                 ),
               )
             : Container(
-                child: ListView(
-                  children: _newsData.map((e) => ArticleTile(e)).toList(),
+                child: RefreshIndicator(
+                  color: Colors.black,
+                  onRefresh: () async {
+                    _getSelectedSportsNews();
+                  },
+                  child: ListView(
+                    children: _newsData.map((e) => ArticleTile(e)).toList(),
+                  ),
                 ),
               ),
       ),
